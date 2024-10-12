@@ -6,7 +6,7 @@ Instrucciones de uso
 
 1) Descomprimir el archivo actividad1.rar
 
-2) Ubicar la ruta de tarea1.py
+2) Ubicar la ruta de tarea0.rb
 
 Ejemplo: C:\...\teoria de grafo\actividad1
 
