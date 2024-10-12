@@ -35,7 +35,7 @@ class TriggerGraph
           print "(#{@set1[ordered_pair]}, #{@set2[ordered_pair]})"
         end
       end
-      print "}"
+      print "}\n"
     end
   end
 end
