@@ -1,8 +1,12 @@
 require_relative './read'
+
 class Main
   def initialize(name_archive)
     
     read_archive_main=Read.new(name_archive)
+
+    #graph_main=Graph.new(read_archive_main)
+
 
   
   end
