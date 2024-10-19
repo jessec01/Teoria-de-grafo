@@ -16,8 +16,20 @@ class Read
       num_accountant=0
       File.open(name_archive) do |content|
         content.each_line do |linea|
-          string_str=/\d/.match(linea)
-          puts string_str
+          if num_accountant ==0
+            num_size=/\d/.match(linea)
+            #puts num_size
+        
+          else
+            string_date=/\d\s\d/.match(linea)
+            num_vertices_initial=string_date[0]
+            num_vertices_end=string_date[3]
+            puts num_vertices_end
+            puts num_vertices_initial
+            
+          end
+          
+          num_accountant=num_accountant+1
         end
       end
       
