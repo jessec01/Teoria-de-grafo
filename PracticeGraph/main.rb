@@ -4,7 +4,7 @@ class Main
   def initialize(name_archive)
     
     read_archive_main=Read.new(name_archive)
-    puts read_archive_main.graph_dirigide
+    #puts read_archive_main.graph_dirigide
     #graph_main=Graph.new(read_archive_main)
 
 
