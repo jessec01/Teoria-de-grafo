@@ -4,12 +4,29 @@ class Graph
     @num_size=num_size
     #@num_size.class
     @list_graph=Array.new(@num_size)
-    
+    @list_edge=[]
     @random_rand=Random.new()
     make_list_graph
-    #puts @list_graph.inspect
-    #is_dirigide
-    #exist_edge(2,3)
+    @list_marked=Array.new(@num_size)
+    make_list_marked
+    @num_accountant=0
+    @list_vertices_with_element=[]
+  end
+  def analize_vetices
+    @num_size.times do | element|
+      if not @list_graph[element].size==0
+        @list_vertices_with_element.push(element)
+      end
+    end
+    #puts @list_vertices_with_element
+  end
+  def search_edge(string_edge)
+    @list_edge.each do |date|
+      if date==string_edge
+        return true
+      end
+      return false
+    end
   end
   def is_dirigide
     is_dirigide_graph=true
@@ -28,33 +45,28 @@ class Graph
     @list_graph[num_vertice_a].include?(num_vertice_b)
   end  
   def add_vertices(vertice,edge)
-    #make_list_graph
-    #puts vertice
-    #puts edge
     @list_graph[vertice].push(edge)
-    #puts @list_graph.inspect
-    is_dirigide=0
-    if is_dirigide==1
-      #@list_graph.insert(edge,vertice)
-    end
   end
+  def make_list_marked
+    @num_size.times do |i|
+      @list_marked[i]=false
+    end
+  end 
   def make_list_graph
-    #@num_size=4
     @num_size.times do |i|
       @list_graph[i]=Array.new(0)
     end
-    #puts @list_graph.inspect
   end
   def to_make_path_random()
     num_size_path=@random_rand.rand(@num_size)
-    num_vertices_initial=2 #@random_rand.rand(@num_size)
-    num_accountant=0
-    puts num_vertices_initial
-    #begin 
-    run_path_random(num_vertices_initial,num_accountant,num_size_path,@list_graph)
-    #rescue NoMethodError => e
-      #puts "Error: #{e.message}"
-    #end
+    analize_vetices
+    num_vertices_initial= @random_rand.rand(@list_vertices_with_element.size)
+  
+    #puts "valor: #{@list_vertices_with_element[num_vertices_initial]}"
+    #puts "size:#{@num_size}"
+    #puts "list_graph[#{num_vertices_initial}].size:#{@list_graph[num_vertices_initial].size}"
+    print "#{@list_vertices_with_element[num_vertices_initial]} ->"
+    run_path_random(@list_vertices_with_element[num_vertices_initial],num_size_path,@list_graph) 
   end
   def see_graph
     @num_size.times do |element|
@@ -63,19 +75,43 @@ class Graph
       end
     end
   end
-  def run_path_random(vertice,num_accountant,size_path,list_graph)
-    vertice=vertice
-    #puts list_graph[1].inspect
-    list_graph.each do |element|
-      if num_accountant !=size_path
-        num_accountant=num_accountant+1
-        puts element
-
-        run_path_random(element,num_accountant,size_path,list_graph)
+  def run_path_random(vertice,size_path,list_graph)
+    num_vertice=vertice
+    num_size_path=size_path
+    string_edge= ''
+    #puts list_graph[num_vertice].size
+    if list_graph[num_vertice].size==0
+      return
+    else 
+      list_graph[num_vertice].each do |element|
+        if not @list_marked[element]
+          @num_accountant=@num_accountant+1
+          @list_marked[element]=true 
+          if @list_edge.empty?
+            #puts "hola mundo"
+            string_edge=vertice.to_s+"->"+element.to_s
+            if list_graph[element].size==0
+              print "#{element}"
+              return
+            else
+              print "#{element}->"
+            end
+            run_path_random(element,num_size_path,list_graph)
+            @list_edge.push(string_edge)
+          else 
+            if not search_edge(string_edge)
+              string_edge=vertice.to_s+"->"+element.to_s 
+              print "->#{element}"
+              @list_edge.push(string_edge)
+              if @num_accountant<num_size_path
+                run_path_random(element,num_size_path,list_graph)
+              end
+            end
+          end
+        end
       end
     end
   end
-
   #getter 
   def  list_graph
     @list_graph
@@ -83,10 +119,6 @@ class Graph
   #getter 
   def size
     @size
-  end
-  #setter 
-  def size=(size)
-    @num_size=num_size
   end
 end
 

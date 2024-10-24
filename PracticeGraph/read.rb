@@ -3,20 +3,12 @@ require_relative './graph'
 #
 class Read 
   def initialize(name_archive)
-    @graph_dirigide=nil
+    @graph_dirigide=Graph.new(10)
     read_archive(name_archive)
-    puts @graph_dirigide.is_dirigide
-    @graph_dirigide.see_graph
-    puts '\n'
-    @graph_dirigide.to_make_path_random
-    
-    #puts @graph_dirigide.list_graph.inspect
-
   end
   def read_archive(name_archive)
-    
-    #puts content.methods
     begin
+
       num_size=0
       num_vertices_end=0
       num_vertices_initial=0
@@ -24,79 +16,67 @@ class Read
       File.open(name_archive) do |content|
         content.each_line do |linea|
           if num_accountant ==0
-            num_size=/\d/.match(linea)
-            @graph_dirigide=Graph.new(num_size[0].to_i)
-            #puts num_size
-        
+            num_size=/^\d{1,3}$/.match(linea).to_s
+            #puts "eL"
+            #puts num_size.size
+            if num_size.size==1
+              @graph_dirigide=Graph.new(value_size.to_i)
+              #puts "Hola "
+              #puts @graph_dirigide
+            elsif num_size.size==2
+              value_size=num_size[0]+num_size[1]
+              @graph_dirigide=Graph.new(value_size.to_i)
+              #puts "Hola "
+              #puts @graph_dirigide
+            elsif num_size.size==3
+              value_size=num_size[0]+num_size[1]+num_size[2]
+              @graph_dirigide=Graph.new(value_size.to_i)
+              #puts "Hola "
+              #puts @graph_dirigide
+            end
           else
-            num_vertices_initial=/\d/.match(linea).to_s
-            #um_vertices_end=string_date
-            num_vertices_end=/(?<=\d| )\d/.match(linea).to_s
-            #puts num_vertices_end.class
-            #puts num_vertices_initial.class
-            @graph_dirigide.add_vertices(num_vertices_initial.to_i,num_vertices_end.to_i)
-            #puts num_vertices_end
-            #puts num_vertices_initial
-            
+            part=linea.split(" ")
+            if part.length == 2 && part.all? { |part| part.match(/^\d{1,3}$/) }
+              num_vertices_initial=part[0].to_i
+              num_vertices_end=part[1].to_i
+              #puts @graph_dirigide
+              #puts "mundo"
+              @graph_dirigide.add_vertices(num_vertices_initial,num_vertices_end)
+            end  
           end
-          
           num_accountant=num_accountant+1
         end
       end
-      
-      #content.each do |line|
-        #
-        #puts line
-        #num_accountant=num_accountant+1
-      #end
-      
     rescue IOError =>e 
       puts "Error al intentar abrir el archivo"       
     end
-
   end
   def read_archive_gv(name_archive)
     
-    #puts content.methods
-    begin
       num_size=0
       num_vertices_end=0
       num_vertices_initial=0
       num_accountant=0
-      File.open(name_archive) do |content|
-        content.each_line do |linea|
-          puts linea
-          #if num_accountant ==0
-            #num_size=/\d/.match(linea)
-            #@graph_dirigide=Graph.new(num_size[0].to_i)
-            #puts num_size
-        
-          #else
-            #num_vertices_initial=/\d/.match(linea).to_s
-            #um_vertices_end=string_date
-            #num_vertices_end=/(?<=\d| )\d/.match(linea).to_s
-            #puts num_vertices_end.class
-            #puts num_vertices_initial.class
-            #@graph_dirigide.add_vertices(num_vertices_initial.to_i,num_vertices_end.to_i)
-            #puts num_vertices_end
-            #puts num_vertices_initial
-            
-          #end
+      begin 
+        File.open(name_archive) do |content|
+          content.each_line do |linea|
+            if num_accountant ==0
+              if /graph/.match(linea)
+                puts "hola mundo"
+              end
+            elsif num_accountant ==1
+              if /{/.match(linea)
+                puts "hola world"
+              end
+            elsif num_accountant>1
+              puts hola mundo
+            end
+          end
+        end 
+      rescue IOError =>e 
+        puts "Error al intentar abrir el archivo"       
+      end 
           
-          num_accountant=num_accountant+1
-        end
-      end
-      
-      #content.each do |line|
-        #
-        #puts line
-        #num_accountant=num_accountant+1
-      #end
-      
-    rescue IOError =>e 
-      puts "Error al intentar abrir el archivo"       
-    end
-
   end
   def graph_dirigide
     @graph_dirigide
