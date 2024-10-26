@@ -75,15 +75,40 @@ class Graph
       end
     end
   end
+  def modify_edge_random(list_graph)
+    size=list_graph.size
+    list_graph_new=[]
+    #puts list_graph_new
+    list_select=[]
+    size.times do |i|
+      list_select.push(i)
+    end
+    size.times do |element|
+      value=@random_rand.rand(size)
+      list_graph_new.push(list_select[value])
+      aux=list_select[value]
+      list_select[value]=list_select[size-1]
+      list_select[size-1]=aux
+      size=size-1
+    end
+    #puts list_graph_new.inspect
+    return list_graph_new
+  end 
   def run_path_random(vertice,size_path,list_graph)
     num_vertice=vertice
     num_size_path=size_path
     string_edge= ''
+    #is_element
     #puts list_graph[num_vertice].size
     if list_graph[num_vertice].size==0
       return
     else 
-      list_graph[num_vertice].each do |element|
+      list_graph=modify_edge_random(list_graph[num_vertice])
+      #return 
+      #list_graph=modify_edge_random(list_graph)
+      #puts list_graph.inspect
+      #return
+      list_graph.each do |element|
         if not @list_marked[element]
           @num_accountant=@num_accountant+1
           @list_marked[element]=true 
@@ -94,10 +119,11 @@ class Graph
               print "#{element}"
               return
             else
-              print "#{element}->"
+              print "#{element}"
             end
-            run_path_random(element,num_size_path,list_graph)
             @list_edge.push(string_edge)
+            run_path_random(element,num_size_path,list_graph)
+            
           else 
             if not search_edge(string_edge)
               string_edge=vertice.to_s+"->"+element.to_s 
