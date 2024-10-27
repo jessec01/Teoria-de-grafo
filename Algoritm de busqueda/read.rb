@@ -3,7 +3,7 @@ require_relative './graph'
 #
 class Read 
   def initialize(name_archive)
-    @graph_dirigide=Graph.new(10)
+    @graph_dirigide=nil
     read_archive(name_archive)
   end
   def read_archive(name_archive)
@@ -13,6 +13,7 @@ class Read
       num_vertices_end=0
       num_vertices_initial=0
       num_accountant=0
+      value_size=0
       File.open(name_archive) do |content|
         content.each_line do |linea|
           if num_accountant ==0
@@ -20,20 +21,23 @@ class Read
             #puts "eL"
             #puts num_size.size
             if num_size.size==1
-              @graph_dirigide=Graph.new(value_size.to_i)
+              value_size=num_size
+              #@graph_dirigide=Graph.new(value_size.to_i)
               #puts "Hola "
               #puts @graph_dirigide
             elsif num_size.size==2
               value_size=num_size[0]+num_size[1]
-              @graph_dirigide=Graph.new(value_size.to_i)
+              #@graph_dirigide=Graph.new(value_size.to_i,)
               #puts "Hola "
               #puts @graph_dirigide
             elsif num_size.size==3
               value_size=num_size[0]+num_size[1]+num_size[2]
-              @graph_dirigide=Graph.new(value_size.to_i)
               #puts "Hola "
               #puts @graph_dirigide
             end
+          elsif num_accountant==1
+            value_read=/\d/.match(linea).to_s
+            @graph_dirigide=Graph.new(value_size.to_i,value_read.to_i)
           else
             part=linea.split(" ")
             if part.length == 2 && part.all? { |part| part.match(/^\d{1,3}$/) }

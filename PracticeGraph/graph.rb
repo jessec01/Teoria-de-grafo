@@ -143,7 +143,7 @@ class Graph
     @list_graph
   end
   #getter 
-  def size
+  def num_size
     @size
   end
 end
