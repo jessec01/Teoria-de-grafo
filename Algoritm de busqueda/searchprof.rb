@@ -15,11 +15,16 @@ class SearchProf
     @num_forward_edge=0
     @num_cros_edge=0
     inicialize_struct
-    aux=@graph.list_graph[0]
-    print  "#{aux[0]}-"
+    #print  "#{aux[0]}-"
     @graph.list_graph.size.times do |i|
       run_profundida(@graph,i)
     end
+    puts "profundidad"
+    puts "árbol:#{@num_tree_edge}"
+    puts "retorno: #{@num_back_edge}"
+    sum=@num_cros_edge+@num_forward_edge
+    puts "avance/cruzada:#{sum}" 
+
   end 
   def inicialize_struct
     @graph.num_size.times do |i|
@@ -53,8 +58,14 @@ class SearchProf
         string_edge=vertice.to_s+"->"+element.to_s
         #print string_edge
         @num_tree_edge=@num_tree_edge+1
-        print "Tree edge #{vertice}-->#{element}" 
-        @list_edge.push(string_edge) 
+        #print "Tree edge #{vertice}-->#{element}" 
+        if graph.is_dirigide==0
+          @list_edge.push(string_edge) 
+        else
+          @list_edge.push(string_edge)
+          string_edge=element.to_s+"->"+vertice.to_s
+          @list_edge.push(string_edge)
+        end
         run_profundida(graph,element)
       else
         string_edge=vertice.to_s+"->"+element.to_s
@@ -62,16 +73,39 @@ class SearchProf
         #search_edge(string_edge)
         if not search_edge(string_edge)
           if @list_distance[vertice]>@list_distance[element] and @list_distance_f[vertice]< @list_distance_f[element]
-            print "back edge #{vertice}-->#{element}"
-            @list_edge.push(string_edge)
+            #print "back edge #{vertice}-->#{element}"
+            @num_back_edge=@num_back_edge+1
+            if graph.is_dirigide==0
+              @list_edge.push(string_edge)
+            else
+              @list_edge.push(string_edge)
+              string_edge=element.to_s+"->"+vertice.to_s
+              @list_edge.push(string_edge)
+            end
           elsif @list_distance[vertice]<@list_distance[element] and @list_distance_f[vertice]>@list_distance_f[element]
-            print "Forward edge  #{vertice}-->#{element}"
+            #print "Forward edge  #{vertice}-->#{element}"
+            @num_forward_edge=@num_forward_edge+1
             #string_edge=vertice.to_s+"->"+element.to_s
-            @list_edge.push(string_edge)
+            if graph.is_dirigide==0
+              @list_edge.push(string_edge)
+            else
+              @list_edge.push(string_edge)
+              string_edge=element.to_s+"->"+vertice.to_s
+              @list_edge.push(string_edge)
+            end
+            #@list_edge.push(string_edge)
           elsif @list_distance[vertice]>@list_distance[element] and @list_distance_f[vertice]>@list_distance_f[element]
-            print "Cross edge  #{vertice}-->#{element}"
+            #print "Cross edge  #{vertice}-->#{element}"
+            @num_cros_edge=@num_cros_edge+1
             #string_edge=vertice.to_s+"->"+element.to_s
-            @list_edge.push(string_edge)
+            if graph.is_dirigide==0
+              @list_edge.push(string_edge)
+            else
+              @list_edge.push(string_edge)
+              string_edge=element.to_s+"->"+vertice.to_s
+              @list_edge.push(string_edge)
+            end
+            #@list_edge.push(string_edge)
           end
         end
       end

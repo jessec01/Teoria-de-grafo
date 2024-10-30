@@ -14,7 +14,6 @@ class Graph
     @random_rand=Random.new()
     @num_accountant=0
     @list_vertices_with_element=[]
-    
   end    
   def exist_edge(num_vertice_a,num_vertice_b)
     @list_graph[num_vertice_a].include?(num_vertice_b)
@@ -44,6 +43,9 @@ class Graph
   #getter 
   def size
     @size
+  end
+  def is_dirigide
+    @is_dirigide
   end
 end
 

@@ -5,8 +5,9 @@ class Main
   def initialize(name_archive)
     
     @read_archive_main=Read.new(name_archive)
-    #@searchanchura=SearchAnchura.new(@read_archive_main.graph_dirigide)
+    @searchanchura=SearchAnchura.new(@read_archive_main.graph_dirigide)
     #puts ""
+  
     @searchprof=SearchProf.new(@read_archive_main.graph_dirigide)
     #read_archive_main.graph_dirigide.see_graph
     #puts read_archive_main.graph_dirigide.is_dirigide
