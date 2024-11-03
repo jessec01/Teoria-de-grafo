@@ -1,7 +1,5 @@
-# Place the cursor inside "graph" to get some refactoring options
-
-digraph {
-1 -> 0;
+graph{
+1->4;
 3->4;
 3->5;
 2->1

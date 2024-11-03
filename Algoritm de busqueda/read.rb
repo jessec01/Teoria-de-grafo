@@ -4,7 +4,8 @@ require_relative './graph'
 class Read 
   def initialize(name_archive)
     @graph_dirigide=nil
-    read_archive(name_archive)
+    read_archive_gv(name_archive)
+    #@graph_dirigide.see_graph
   end
   def read_archive(name_archive)
     begin
@@ -56,31 +57,68 @@ class Read
     end
   end
   def read_archive_gv(name_archive)
-    
+      name_archive=name_archive
       num_size=0
       num_vertices_end=0
       num_vertices_initial=0
       num_accountant=0
+      num_old=0
       begin 
         File.open(name_archive) do |content|
           content.each_line do |linea|
-            if num_accountant ==0
-              if /graph/.match(linea)
-                puts "hola mundo"
-              end
-            elsif num_accountant ==1
-              if /{/.match(linea)
-                puts "hola world"
-              end
-            elsif num_accountant>1
-              puts hola mundo
-            end
+            if num_accountant>0
+              #part=linea.split("->")
+              #print part.length
+              martch= ""
+              #print "#{linea.match(/^(\d{3})->(\d{3});$/)}"
+              
+              martch1 = linea.match(/\d+/)
+              martch=linea.match(/>([^;]+)/)
+              if martch!=nil and martch1!=nil 
+                num_vertices_initial=martch1.to_s
+                num_vertices_end=martch[1].to_s
+                #print "#{num_old}>#{num_vertices_initial.to_i}"
+                if num_vertices_initial.to_i>num_old
+                  num_old=num_vertices_initial.to_i
+                elsif num_vertices_end.to_i>num_old
+                  num_old=num_vertices_end.to_i
+                end
+              end            
+            end            
+            num_accountant=num_accountant+1
           end
         end 
       rescue IOError =>e 
         puts "Error al intentar abrir el archivo"       
       end 
-          
+      begin
+        num_accountant=0
+        File.open(name_archive) do |content|
+          content.each_line do |linea|
+            if num_accountant==0
+              string_type_graph=linea.match /\w*/
+              if string_type_graph.to_s.eql?('graph')
+                @graph_dirigide=Graph.new(num_old+1,0)
+              elsif string_type_graph.to_s.eql?('digraph')
+                @graph_dirigide=Graph.new(num_old+1,1) 
+              end
+            elsif num_accountant>0
+              martch1 = linea.match(/\d+/)
+              martch=linea.match(/>([^;]+)/)
+              if martch!=nil and martch1!=nil 
+                num_vertices_initial=martch1.to_s
+                num_vertices_end=martch[1].to_s
+                @graph_dirigide.add_vertices(num_vertices_initial.to_i,num_vertices_end.to_i)
+
+              end
+            end
+            num_accountant=num_accountant+1
+          end
+        end
+      rescue IOError=>e
+        puts "Error al abrir el archivo"
+      end
+    
   end
   def graph_dirigide
     @graph_dirigide

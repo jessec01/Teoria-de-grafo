@@ -19,6 +19,7 @@ class Graph
     @list_graph[num_vertice_a].include?(num_vertice_b)
   end  
   def add_vertices(vertice,edge)
+    #puts "#{vertice}-#{edge}" 
     @list_graph[vertice].push(edge)
     if @is_dirigide==1
       @list_graph[edge].push(vertice)
@@ -32,7 +33,7 @@ class Graph
   def see_graph
     @num_size.times do |element|
       @list_graph[element].each do |date|
-        puts date
+        puts "#{element}->#{date}"
       end
     end
   end
