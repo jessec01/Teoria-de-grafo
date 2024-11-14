@@ -36,11 +36,22 @@ class SearchProf
   end
   def search_edge(string_edge)
     #print  @list_edge.size
+    
     if not @list_edge.empty?
-      @list_edge.size.times do |date|
-        #print "#{@list_edge[date]}==#{string_edge} \n"
-        if @list_edge[date]==string_edge
+      #puts string_edge
+      #puts "|"
+      #puts @list_edge.inspect
+      init=0
+      final=@list_edge.size-1
+      while init<=final 
+        medium=(init+final)/2
+        #print "#{@list_edge[medium]}-#{string_edge}---"
+        if @list_edge[medium]==string_edge
           return true
+        elsif @list_edge[medium]<string_edge
+          init=medium+1
+        else
+          final=medium-1
         end
         
       end
@@ -54,7 +65,10 @@ class SearchProf
     #print "hola mundo"
     graph.list_graph[vertice].each do |element|
       if @list_marked[element]==0
+        
         @list_forest[element]=vertice 
+        #puts " "
+        #puts "--#{vertice}--"
         string_edge=vertice.to_s+"->"+element.to_s
         #print string_edge
         @num_tree_edge=@num_tree_edge+1
@@ -70,7 +84,7 @@ class SearchProf
       else
         string_edge=vertice.to_s+"->"+element.to_s
         #print "#{@list_edge}==#{string_edge} \n"
-        #search_edge(string_edge)
+        #puts search_edge(string_edge)
         if not search_edge(string_edge)
           if @list_distance[vertice]>@list_distance[element] and @list_distance_f[vertice]< @list_distance_f[element]
             #print "back edge #{vertice}-->#{element}"
@@ -109,9 +123,9 @@ class SearchProf
           end
         end
       end
-    @list_marked[vertice]=2
-    @time=@time+1
-    @list_distance_f[vertice]=@time
+      @list_marked[vertice]=2
+      @time=@time+1
+      @list_distance_f[vertice]=@time
     end
   end
 end

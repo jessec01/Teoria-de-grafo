@@ -51,11 +51,22 @@ s[/[aeiou](.)\1/, 1] # => "l"
 #el modo simbolo es mas optimo
 # puts  "digraph".match /\w*/
 s = "34->45;"
-
-
-
+n=10
+array_num=[n]
+puts array_num.class
+m=10
+n.times do |i|
+    array_num[i]=Array.new(m)
+end
+puts array_num.class
+n.times do |i|
+    m.times do |j|
+        array_num[i][j]=6
+    end
+end 
+puts array_num.inspect 
 #puts match 
 match = s.match(/>([^;]+)/)
-puts match[1]
+#puts match[1]
 
 

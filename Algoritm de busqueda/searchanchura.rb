@@ -25,11 +25,22 @@ class SearchAnchura
   end
   def search_edge(string_edge)
     #print  @list_edge.size
+    
     if not @list_edge.empty?
-      @list_edge.size.times do |date|
-        #print "#{@list_edge[date]}==#{string_edge} \n"
-        if @list_edge[date]==string_edge
+      #puts string_edge
+      #puts "|"
+      #puts @list_edge.inspect
+      init=0
+      final=@list_edge.size-1
+      while init<=final 
+        medium=(init+final)/2
+        #print "#{@list_edge[medium]}-#{string_edge}---"
+        if @list_edge[medium]==string_edge
           return true
+        elsif @list_edge[medium]<string_edge
+          init=medium+1
+        else
+          final=medium-1
         end
         
       end
