@@ -52,11 +52,11 @@ s[/[aeiou](.)\1/, 1] # => "l"
 # puts  "digraph".match /\w*/
 s = "34->45;"
 n=10
-array_num=[n]
+array_num=[n] #define un type date Array de tamaño n 
 puts array_num.class
 m=10
 n.times do |i|
-    array_num[i]=Array.new(m)
+    array_num[i]=Array.new(m) #se define que es un Array de Array "una matri en Ruby"
 end
 puts array_num.class
 n.times do |i|

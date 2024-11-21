@@ -58,10 +58,10 @@ class SearchAnchura
       #print list_vertice_aux[i]
       #puts "--"
       @queue_vertice=[]
-      calcule_path(list_vertice_aux[i])
+      @sum_vertice=calcule_path_modify(list_vertice_aux[i])
       #print "#{@queue_vertice.size} "
-      @sum_vertice=@queue_vertice.size
-      @queue_vertice=nil
+     # @sum_vertice=@queue_vertice.size
+      #@queue_vertice=nil
       #print @sum_vertice
       #puts "--"
       if @sum_vertice>sum_aux
@@ -77,12 +77,14 @@ class SearchAnchura
       #print "#{@list_forest[i]}-"
     #end
     #puts "ll"
-    puts @sum_vertice
+    #puts @sum_vertice
+    #@queue_vertice=[]
+    puts sum_aux+1
+
     see_path_large_intern(vertice_origen_large)
     #@sum_vertice
   end
   def see_path_large_intern(vertice)
-    
     if vertice==@origen
       print "#{@origen} "
       #@queue_vertice.push(vertice)
@@ -96,7 +98,15 @@ class SearchAnchura
       end
     end
   end
-
+  def calcule_path_modify(vertice)
+    number=vertice
+    size_path=0
+    while number!=@origen 
+      size_path=size_path+1
+      number=@list_forest[number]
+    end
+    return size_path
+  end
   def calcule_path(vertice)
     #print "#{vertice}--"
     if vertice==@origen
@@ -107,8 +117,9 @@ class SearchAnchura
       if @list_forest[vertice]!=nil 
         #@sum_vertice=@sum_vertice+1
         #print @sum_vertice
-        calcule_path(@list_forest[vertice])
         @queue_vertice.push(vertice)
+        calcule_path(@list_forest[vertice])
+      
 
       end
     end

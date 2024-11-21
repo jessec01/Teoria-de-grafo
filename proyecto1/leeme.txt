@@ -1,10 +1,29 @@
-5
-0
-0 1
-0 3
-1 4
-1 3
-2 4
-2 3
-3 4
-4 0
+LEEME
+
+main.rb
+
+Instrucciones de uso
+
+1) Descomprimir el archivo proyecto1.rar
+
+2) Ubicar la ruta de tarea1.rb
+
+Ejemplo: C:\...\proyecto1
+
+3) Abrir el cmd en windows o la terminal de linux o mac
+Escribir cd + pegar la ruta copiada de archivo tarea1.rb
+
+Ejemplo: cd C:\...\proyecto1
+
+4) Por ultimo escribir ruby main.rb i j
+Nota: 
+i=fila
+j=columna
+Informacion:
+Desarrollado por Gregory Perozo
+CI: 26471194
+Realizado el 13 de noviembre
+Nota:
+rango maximo de entrada:49 50
+más alla se explota la pila del compilador por las llamadas recursivas.
+Algunos vertices puede parecer que se repite, pero es por el salto de linea de la linea de comando ejemplo 2 . . . 2 40 pero es 240 solo que hubo un salto de linea.
