@@ -4,10 +4,9 @@ require_relative './graph'
 class Read 
   def initialize(name_archive)
     @graph_dirigide=nil
-    read_archive_gv(name_archive)
-    @graph_dirigide.see_graph
-    -
-
+    read_archive(name_archive)
+    #@graph_dirigide.see_graph
+    puts @graph_dirigide.list_edge.inspect
   end
   def read_archive(name_archive)
     begin
@@ -22,33 +21,33 @@ class Read
           if num_accountant ==0
             num_size=/^\d{1,3}$/.match(linea).to_s
             #puts "eL"
-            #puts num_size.size
+            #puts num_size
             if num_size.size==1
               value_size=num_size
-              #@graph_dirigide=Graph.new(value_size.to_i)
+              @graph_dirigide=Graph.new(value_size.to_i)
               #puts "Hola "
               #puts @graph_dirigide
             elsif num_size.size==2
               value_size=num_size[0]+num_size[1]
-              #@graph_dirigide=Graph.new(value_size.to_i,)
+              @graph_dirigide=Graph.new(value_size.to_i)
               #puts "Hola "
               #puts @graph_dirigide
             elsif num_size.size==3
               value_size=num_size[0]+num_size[1]+num_size[2]
+              @graph_dirigide=Graph.new(value_size.to_i)  
               #puts "Hola "
               #puts @graph_dirigide
             end
-          elsif num_accountant==1
-            value_read=/\d/.match(linea).to_s
-            @graph_dirigide=Graph.new(value_size.to_i,value_read.to_i)
-          else
+          elsif num_accountant>=1
             part=linea.split(" ")
-            if part.length == 2 && part.all? { |part| part.match(/^\d{1,3}$/) }
+            if part.length == 3 && part.all? { |part| part.match(/^-?\d{1,3}$/) }
               num_vertices_initial=part[0].to_i
               num_vertices_end=part[1].to_i
+              num_size=part[2].to_i
+              #print "#{num_vertices_initial}--#{num_vertices_end} peso: #{num_size} "
               #puts @graph_dirigide
               #puts "mundo"
-              @graph_dirigide.add_vertices(num_vertices_initial,num_vertices_end)
+              @graph_dirigide.add_edge(num_vertices_initial,num_vertices_end,num_size)
             end  
           end
           num_accountant=num_accountant+1

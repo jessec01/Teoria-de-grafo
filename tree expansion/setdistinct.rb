@@ -49,7 +49,7 @@ class CDistinct
     
   end
   def connect(valueA,valueB)
-    return search(A)==search(valuaB)
+    return search_speed(A)==search_speed(valuaB)
   end 
   def number 
     puts @list_id
