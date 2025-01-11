@@ -1,23 +1,32 @@
 require_relative './graph'
 require_relative './Primvoraz'
-#require_relative './searchanchura'
+require_relative './dijkstra'
 #require_relative './searchprof'
 class Main
   def initialize(i,j)
     
     @graph=Graph.new(i,j,true)
-    #@graph.see_graph
-    #@graph.see_mesh
     @graph_new=Graph.new(i,j,false) 
     @prim=PrimVoraz.new(@graph)
-    value= @prim.arbol_resultante
+    value= @prim.resulting_tree
     value.size.times do |i|
       if i!=0
-        @graph_new.add_edge(value[i].origin,value[i].destination,4)
+        @graph_new.add_edge(value[i].origin,value[i].destination,value[i].size)
       end
     end
     @graph_new.see_mesh
     puts ""
+    #puts @graph_new.see_path_large
+    @dijk=Dijkstra.new(@graph_new,@graph_new.see_path_large)
+    print "destino: #{@graph_new.see_path_large} "
+    puts ""
+    #puts @dijk.path_a(@graph_new.see_path_large)
+    puts @dijk.count_relax
+    #@tree=@dijk.arbol_resultante
+    count=0
+   
+
+    
     #@graph_new=@prim.arbol_resultante
     #@prim.arbol_resultante
     #@graph_new.see_mesh

@@ -1,23 +1,69 @@
-# Documentacion
-class Graph
+require_relative './edge'
+class Graph 
+  attr_accessor :num_size
   def initialize(i,j,lleno)
     @i=i.to_i
     @j=j.to_i
     @num_size=@i*@j
-    @list_graph=Array.new(@num_size)
-    make_list_graph
+    @random_rand=Random.new()
+    @list_graph=[]
+    @num_size.times do |i|
+      @list_graph.push([])
+    end
     @list_marked=Array.new(@num_size)
     if lleno 
       run_mesh(@i,@j)
     end
-  end    
+  end
+  def add_edge(number_v,number_w,number_size)
+    new_adge=Edge.new(number_v,number_w,number_size)
+    @list_graph[number_v].push(new_adge)
+    @list_graph[number_w].push(new_adge)
+  end
+  def see_path_large() 
+    list_vertice_aux=[]
+    @list_graph.size.times do |i|
+      if @list_graph[i].size==1 and i!=0 and !list_vertice_aux.include?(i)
+        list_vertice_aux.push(i)
+        #puts i
+      end
+    end
+    #puts list_vertice_aux
+    return list_vertice_aux.last
+  end
   def exist_edge(num_vertice_a,num_vertice_b)
-    @list_graph[num_vertice_a].include?(num_vertice_b)
-  end  
-  def add_vertices(vertice,edge)
-    #puts "#{vertice}-#{edge}" 
-    @list_graph[vertice].push(edge)
-    @list_graph[edge].push(vertice)
+    list_edge=@list_graph[num_vertice_a]
+    list_edge.each do |element|
+      if element.a_xtreme==num_vertice_b or element.extreme_oposite(num_vertice_a)==num_vertice_b
+        return true
+      end
+    end
+    return false
+    #@list_graph[num_vertice_a].include?(num_vertice_b)
+  end 
+  def see_graph()
+    @num_size.times do |element|
+      #@list_graph[element].
+      #print "hola"
+      date2=@list_graph[element]
+      #print date2
+      date2.each do |date|
+        print "@list_graph[#{element}]=#{date.extreme_oposite(element)} #{date.a_xtreme} #{date.size} "
+        puts 
+      end
+    end
+  end
+  def list_edge()
+    list_edge=[]
+    @num_size.times do |element|
+      date2=@list_graph[element]
+      date2.each do |date|
+        if element==date.a_xtreme
+          list_edge.push(date)
+        end
+      end
+    end
+    return list_edge
   end
   def run_mesh(i,j)
     imax=i
@@ -27,46 +73,55 @@ class Graph
         pos=(i*jmax)+j
         #puts pos
         if pos <jmax
-          if j!=0 and j!=jmax-1
-            @list_graph[pos].push(pos-1)
-            @list_graph[pos-1].push(pos)
+          if j!=0 and j!=jmax-
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos  ,pos-1,num_size_path)
           elsif j==jmax-1
-            @list_graph[pos].push(pos-1)
-            @list_graph[pos-1].push(pos)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-1,num_size_path)
           end
         elsif pos>=jmax and pos<(jmax*imax)-jmax
           if j==0
-            @list_graph[pos].push(pos-jmax)
-            @list_graph[pos-jmax].push(pos)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-jmax,num_size_path)
           elsif j!=0 and j!=jmax-1
-            @list_graph[pos].push(pos-1)
-            @list_graph[pos-1].push(pos)
-            @list_graph[pos].push(pos-jmax)
-            @list_graph[pos-jmax].push(pos)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-1,num_size_path)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-jmax,num_size_path)
           elsif j==jmax-1
-            @list_graph[pos].push(pos-1)
-            @list_graph[pos-1].push(pos)
-            @list_graph[pos].push(pos-jmax)
-            @list_graph[pos-jmax].push(pos)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-1,num_size_path)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-jmax,num_size_path)
           end
         elsif pos>=(imax*jmax)-jmax
           if j==0
-            @list_graph[pos].push(pos-jmax)
-            @list_graph[pos-jmax].push(pos)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-jmax,num_size_path)
           elsif j!=0 and j!=jmax
-            @list_graph[pos].push(pos-1)
-            @list_graph[pos-1].push(pos)
-            @list_graph[pos].push(pos-jmax)
-            @list_graph[pos-jmax].push(pos)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-1,num_size_path)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-jmax,num_size_path)
           elsif j==jmax-1
-            @list_graph[pos].push(pos-1)
-            @list_graph[pos-1].push(pos)
-            @list_graph[pos].push(pos-imax+1)
-            @list_graph[pos-imax+1].push(pos)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-1,num_size_path)
+            num_size_path=@random_rand.rand(1000)
+            add_edge(pos,pos-imax+1,num_size_path)
           end
         end
       end 
     end
+  end 
+  def i
+    @i
+  end
+  def j
+    @j
+  end
+  def list_graph
+    @list_graph
   end
   def see_mesh()
     imax=@i
@@ -79,8 +134,10 @@ class Graph
         
         if pos <jmax
           if j==0
+
+            
             if @list_graph[pos].size==0
-              #print "  "
+            print "#{@list_graph[pos].size}"
             elsif @list_graph[pos].size==1
               if exist_edge(pos,pos+1)
                 print "╶"
@@ -274,34 +331,7 @@ class Graph
       end 
     end
   end
-  def make_list_graph
-    @num_size.times do |i|
-      @list_graph[i]=Array.new(0)
-    end
-  end
-  def see_graph
-    @num_size.times do |element|
-      @list_graph[element].each do |date|
-        puts "#{element}->#{date}"
-      end
-    end
-  end
-  #getter 
-  def  list_graph
-    @list_graph
-  end
-  #getter 
   def size
     @num_size
   end
-  def i 
-    @i
-  end
-  def j
-    @j
-  end
-  def is_dirigide
-    @is_dirigide
-  end
-end
-
+end 

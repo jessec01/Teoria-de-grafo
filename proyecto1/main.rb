@@ -12,8 +12,7 @@ class Main
     #@read_archive_main=Read.new(name_archive)
     @searchanchura=SearchAnchura.new(@graph_new)
     @searchanchura.see_path_large
-    #puts ""
-  
+    #puts ""  
     #@searchprof=SearchProf.new(@read_archive_main.graph_dirigide)
     #read_archive_main.graph_dirigide.see_graph
     #puts read_archive_main.graph_dirigide.is_dirigide
