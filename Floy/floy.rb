@@ -10,20 +10,20 @@ class Floydwarshall
       @pi[num]=Array.new(g.size_graph,nil)
       @ctran[num]=Array.new(g.size_graph,false)
       g.adjacency(num).each do |edge|
-        @mdist[edge.origin][edge.destination]=edge.size
-        @pi[edge.origin][edge.destination]=i
+        @mdist[edge.origin][edge.destination]=edge.size_edge
+        @pi[edge.origin][edge.destination]=num
         @ctran[edge.origin][edge.destination]=true
       end
-      @mdist.size.times do |k|
-        @mdist.size.times do |i|
-          @mdist.size.times do |j|
-            if @mdist[i][j]>@mdist[i][k]+@mdist[k][j]
-              @mdist[i][j]=@mdist[i][k]+@mdist[k][j]
-              @pi[i][j]=@pi[k][j]
-            end
-            @ctran[i][j]=@ctran[i][j]|| (@ctran[i][k] && @ctran[k][j])
-          end  
-        end
+    end  
+    @mdist.size.times do |k|
+      @mdist.size.times do |i|
+        @mdist.size.times do |j|
+          if @mdist[i][j]>@mdist[i][k]+@mdist[k][j]
+            @mdist[i][j]=@mdist[i][k]+@mdist[k][j]
+            @pi[i][j]=@pi[k][j]
+          end
+          @ctran[i][j]=@ctran[i][j]|| (@ctran[i][k] && @ctran[k][j])
+        end  
       end
     end
   end
@@ -44,5 +44,8 @@ class Floydwarshall
   end
   def pi
     @pi
+  end
+  def mdist
+    @mdist
   end
 end
