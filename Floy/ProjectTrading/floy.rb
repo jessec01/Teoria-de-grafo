@@ -23,17 +23,25 @@ class Floydwarshall
         @ctran[edge.origin][edge.destination] = true
       end
     end  
-    #see_msdist
+    print "Matriz initial"
+    puts " "
+    see_msdist
+    puts " "
     @mdist.size.times do |k|
       @mdist.size.times do |i|
         @mdist.size.times do |j|
-          if @mdist[i][j]!=@mdist[i][k] and @mdist[i][j]!=@mdist[k][j]
+          if i !=k and j!=k
             if @mdist[i][j]>@mdist[i][k]+@mdist[k][j]
               @mdist[i][j]=@mdist[i][k]+@mdist[k][j]
               @pi[i][j]=@pi[k][j]
+              #if k>3 #and k<4
+                #print "Matriz modify: index:k->#{k} i->#{i} j->#{j}"
+                #puts " "
+                #see_msdist
+              #end
             end
-          else
-            puts "@mdist[#{i}][#{j}]>@mdist[#{i}][#{k}]+@mdist[#{k}][#{j}]"
+          #else
+            #puts "@mdist[#{i}][#{j}]>@mdist[#{i}][#{k}]+@mdist[#{k}][#{j}]"
           end
           #puts "@mdist[#{i}][#{j}]>@mdist[#{i}][#{k}]+@mdist[#{k}][#{j}]"
           #if k<2
@@ -55,6 +63,39 @@ class Floydwarshall
     end
     puts " "
   end
+  def see_cycle
+    list_value=[]
+    @mdist.size.times do |k|
+      @mdist.size.times do |i|
+        if i==k
+          list_value.push(@pi[k][i])
+        end 
+      end
+    end
+
+    list_value.size.times do |i|
+      list_mark=Array.new(list_value.size,false)
+      stop=false
+      value=i
+      #print "value: #{list_value[value]}-"
+      while  !stop
+        print "value: #{list_value[value]}-"
+        if list_mark[list_value[value]]
+          stop=true
+        #end
+        else
+          
+          list_mark[list_value[value]]=true
+          value=list_value[value]
+         
+        end
+        #list_mark[]=true
+
+      end
+      puts ""
+    end
+      print "sali"
+  end
   def see_pi
     @mdist.size.times do |k|
       @mdist.size.times do |i|
@@ -68,7 +109,8 @@ class Floydwarshall
   end
   def path(v,w,path_)
     if v==w
-      path.push(v)      
+      path.push(v)  
+      print "#{v}--"    
     else
       if @pi[v][w]==nil
         print "There is no path from #{v} to #{w}"

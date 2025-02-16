@@ -8,6 +8,8 @@ class Main
     @floy=Floydwarshall.new(@read_archive_main.graph_dirigide)
     @floy.see_msdist
     @floy.see_pi
+    @floy.see_cycle
+    #@floy.path(0,4,)
   end
 end
 object_argument=ARGV[0]
