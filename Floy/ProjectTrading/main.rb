@@ -6,8 +6,8 @@ class Main
     @read_archive_main=Read.new(name_archive)
     #@read_archive_main.graph_dirigide.see_graph
     @floy=Floydwarshall.new(@read_archive_main.graph_dirigide)
-    @floy.see_msdist
-    @floy.see_pi
+    #@floy.see_msdist
+    #@floy.see_pi
     @floy.see_cycle
     #@floy.path(0,4,)
   end

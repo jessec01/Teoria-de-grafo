@@ -23,10 +23,10 @@ class Floydwarshall
         @ctran[edge.origin][edge.destination] = true
       end
     end  
-    print "Matriz initial"
-    puts " "
-    see_msdist
-    puts " "
+   # print "Matriz initial"
+    #puts " "
+    #see_msdist
+    #puts " "
     @mdist.size.times do |k|
       @mdist.size.times do |i|
         @mdist.size.times do |j|
@@ -68,18 +68,25 @@ class Floydwarshall
     @mdist.size.times do |k|
       @mdist.size.times do |i|
         if i==k
-          list_value.push(@pi[k][i])
+          if @mdist[k][i]<0
+            list_value.push(@pi[k][i])
+          else
+            print "No hay oportunidad de arbritaje"
+            puts " "
+            return #"No hay oportunidad de arbritaje"
+          end
         end 
       end
     end
-
+    account=0
+    list_acccount=Array.new(list_value.size,0)
     list_value.size.times do |i|
       list_mark=Array.new(list_value.size,false)
       stop=false
       value=i
       #print "value: #{list_value[value]}-"
       while  !stop
-        print "value: #{list_value[value]}-"
+        #print "value: #{list_value[value]}-"
         if list_mark[list_value[value]]
           stop=true
         #end
@@ -87,14 +94,50 @@ class Floydwarshall
           
           list_mark[list_value[value]]=true
           value=list_value[value]
-         
+          account=account+1
         end
-        #list_mark[]=true
-
       end
-      puts ""
+      list_acccount[i]=account
+      #puts ""
     end
-      print "sali"
+    value=0
+    position=0
+    
+    list_acccount.size.times do |i|
+      if list_acccount[i]>value
+        position=i
+        value=list_acccount[i]
+      end
+    end
+    #print "position:#{position}"
+    value=position
+    value_total=1
+    stop=false
+    list_mark=Array.new(list_value.size,false)
+    print "Oportunidad de Arbitraje:#{list_value[value]}->"
+    initial=list_value[value]
+    account=0
+    while  !stop
+      
+      if initial!=list_value[value] and account>0
+        print "#{list_value[value]}->"
+      elsif  initial==list_value[value] and account>0
+        print "#{list_value[value]}"
+      end
+      value_total=value_total*Math.exp(@mdist[list_value[value]][list_value[value]])
+      if list_mark[list_value[value]]
+        stop=true
+      #end
+      else       
+        list_mark[list_value[value]]=true
+        value=list_value[value]
+        account=account+1
+      end
+      account=account+1
+    end  
+    puts
+    print "Ganancia:#{value_total.round(3)}"
+    puts " "
   end
   def see_pi
     @mdist.size.times do |k|
