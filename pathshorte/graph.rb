@@ -351,6 +351,12 @@ class Graph
       end 
     end
   end
+  def position_coordinate_x(vertice)
+    @list_coordinate_x[vertice]
+  end
+  def position_coordinate_y(vertice)
+    @list_coordinate_y[vertice]
+  end
   def list_coordinate_x
     @list_coordinate_x
   end
