@@ -7,6 +7,8 @@ class Graph
     @num_size=@i*@j
     @random_rand=Random.new()
     @list_graph=[]
+    @list_coordinate_x=Array.new(num_size,0)
+    @list_coordinate_y=Array.new(num_size,0)
     @num_size.times do |i|
       @list_graph.push([])
     end
@@ -123,11 +125,29 @@ class Graph
   def list_graph
     @list_graph
   end
+  def make_list_coordinate
+    imax=@i
+    jmax=@j
+    imax.times do |i|
+      jmax.times do |j|
+        pos=(i*jmax)+j
+        @list_coordinate_x[pos]=j
+        @list_coordinate_y[pos]=i
+      end
+    end
+  end
+  def see_list_coordinate
+    list_coordinate_x.size.times do   |i|
+      print  "vertice:#{i} pos X:#{list_coordinate_x[i]} pos Y:#{list_coordinate_y[i]}"
+      puts
+    end
+  end
   def see_mesh()
     imax=@i
     jmax=@j
     imax.times do |i|
       jmax.times do |j|
+        
         pos=(i*jmax)+j
         #puts "*"
         #puts pos
@@ -330,6 +350,12 @@ class Graph
         end
       end 
     end
+  end
+  def list_coordinate_x
+    @list_coordinate_x
+  end
+  def list_coordinate_y
+    @list_coordinate_y
   end
   def size
     @num_size

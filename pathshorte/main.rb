@@ -15,13 +15,20 @@ class Main
       end
     end
     @graph_new.see_mesh
+    
     puts ""
+    @graph_new.make_list_coordinate
+    @graph_new.see_list_coordinate
+    #puts @graph_new.list_coordinate_x
+    #puts
+    #puts @graph_new.list_coordinate_y
+    #puts " "
     #puts @graph_new.see_path_large
-    @dijk=Dijkstra.new(@graph_new,@graph_new.see_path_large)
-    print "destino: #{@graph_new.see_path_large} "
-    puts ""
+    #@dijk=Dijkstra.new(@graph_new,@graph_new.see_path_large)
+    #print "destino: #{@graph_new.see_path_large} "
+   # puts ""
     #puts @dijk.path_a(@graph_new.see_path_large)
-    puts @dijk.count_relax
+    #puts @dijk.count_relax
     #@tree=@dijk.arbol_resultante
     count=0
    
