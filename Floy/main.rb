@@ -4,7 +4,8 @@ class Main
   def initialize(name_archive)
     @read_archive_main=Read.new(name_archive)
     @floy=Floydwarshall.new(@read_archive_main.graph_dirigide)
-    puts @floy.mdist.inspect
+    @floy.see_msdist
+    @floy.see_pi
   end
 end
 object_argument=ARGV[0]

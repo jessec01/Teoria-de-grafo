@@ -26,6 +26,24 @@ class Floydwarshall
         end  
       end
     end
+    puts " "
+  end
+  def see_msdist
+    @mdist.size.times do |k|
+      @mdist.size.times do |i|
+        print "#{@pi[k][i]}..  "
+      end
+      puts " "
+    end
+    puts " "
+  end
+  def see_pi
+    @mdist.size.times do |k|
+      @mdist.size.times do |i|
+        print "#{@mdist[k][i]}--  "
+      end
+      puts " "
+    end
   end
   def distance(v,w)
     @mdist[v][w]
