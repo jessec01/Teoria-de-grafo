@@ -3,7 +3,12 @@ class PriorityQueue
     @queue = []
     @comparator = comparator || ->(a, b) { a <=> b }
   end
-
+  def exist_value(v)
+    if @queue.include?(v)
+      return true
+    end
+    return false
+  end
   def push(element)
     @queue << element
     @queue.sort!(&@comparator)

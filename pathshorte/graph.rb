@@ -75,41 +75,41 @@ class Graph
         pos=(i*jmax)+j
         #puts pos
         if pos <jmax
-          if j!=0 and j!=jmax-
-            num_size_path=@random_rand.rand(1000)
+          if j!=0 and j!=jmax-1
+            num_size_path=@random_rand.rand(2)
             add_edge(pos  ,pos-1,num_size_path)
           elsif j==jmax-1
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-1,num_size_path)
           end
         elsif pos>=jmax and pos<(jmax*imax)-jmax
           if j==0
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-jmax,num_size_path)
           elsif j!=0 and j!=jmax-1
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-1,num_size_path)
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-jmax,num_size_path)
           elsif j==jmax-1
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-1,num_size_path)
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-jmax,num_size_path)
           end
         elsif pos>=(imax*jmax)-jmax
           if j==0
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-jmax,num_size_path)
           elsif j!=0 and j!=jmax
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-1,num_size_path)
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-jmax,num_size_path)
           elsif j==jmax-1
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-1,num_size_path)
-            num_size_path=@random_rand.rand(1000)
+            num_size_path=@random_rand.rand(2)
             add_edge(pos,pos-imax+1,num_size_path)
           end
         end

@@ -14,35 +14,42 @@ end
 
 class BestFirstSearch
   
-  def initialize(graph, origin, destination)
+  def initialize(graph,  destination)
     @pi=Array.new(graph.size)
     @edge_a =Array.new(graph.size)
     @pi[0]=nil
     @queue = PriorityQueue.new {|a, b| a.dist <=> b.dist}
-    graph=Graph.new(graph.i,graph.j,false)
+    @graph=graph
+    @graph.make_list_coordinate
     @queue.push(NodeQueue.new(0, 0))
     @count_relax=0
     @destination=destination
-    while !@queue.empty?
+    while not @queue.empty?
       node = @queue.pop
-      @count_relax=@count_relax+1
-      relax(graph, node.v) 
+      if node.v==@destination
+        return
+      end
+      relax(@graph, node.v)
+      
     end 
   end
   def relax(graph, v)
-    @markup[v] = true
-    graph.list_graph[v].each do |edge|
+    @count_relax=@count_relax+1 
+    #@markup[v] = true
+    #print "hola mundo"
+    @graph.list_graph[v].each do |edge|
       w = edge.extreme_oposite(v)
-      if not graph.exist_edge(w)
-        manhanta=distanciaManHattan(w,v)
-        @edge_a.push(edge)
+      #print "hola mundo"
+      #print "hola mundo:#{@edge_a[w]}" 
+      if not @edge_a[w]
+        #print "hola mundo:#{@edge_a[w]}" 
+        manhanta=distanciaManHattan(w)
+        @pi.push(v)
+        @edge_a[w]=edge
         @queue.push(NodeQueue.new(w,manhanta))
-          @count_relax=@count_relax+1
-          if w==@destination
-            return
-          end
-        end
+        #@count_relax=@count_relax+1
       end
+      #return
     end
   end  
   def distanciaManHattan(vActual)
@@ -50,9 +57,13 @@ class BestFirstSearch
     dx=dx.abs
     dy = @graph.position_coordinate_y(vActual) - @graph.position_coordinate_y(@destination)
     dy=dy.abs
-    return (dx + dy)
+    suma=(dx + dy)
+    return suma
   end
   def edge_a
     @edge_a
+  end
+  def count_relax
+    @count_relax
   end
 end

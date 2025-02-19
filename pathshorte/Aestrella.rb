@@ -1,7 +1,7 @@
 require_relative './graph'
 require_relative './edge'
 require_relative './heap'
-require_relative './queuepriority' # Asegúrate de tener una implementación de cola de prioridad en Ruby
+require_relative './queuepriority'
 
 class NodeQueue
   attr_accessor :v, :dist
@@ -11,14 +11,14 @@ class NodeQueue
     @dist = dist
   end
 end
-
-class Dijkstra
+class AEstrella
   def initialize(graph,destination)
     @markup = Array.new(graph.size, false)
     @dist_a = Array.new(graph.size, Float::INFINITY)
     @edge_a =Array.new(graph.size)
     @queue = PriorityQueue.new {|a, b| a.dist <=> b.dist}
-    @graph=Graph.new(graph.i,graph.j,false)
+    @graph=graph
+    @graph.make_list_coordinate
     @dist_a[0] = 0
     @queue.push(NodeQueue.new(0, 0))
     @count_relax=0
@@ -27,8 +27,9 @@ class Dijkstra
       node = @queue.pop
       if node.v==@destination
         return
-      end
+      end  
       relax(graph, node.v)
+      
     end
   end
   def relax(graph, v)
@@ -38,13 +39,35 @@ class Dijkstra
       w = edge.extreme_oposite(v)
       if @markup[w]==false
         if @dist_a[v]+edge.size < @dist_a[w]
+          manhanta=distanciaManHattan(w)
+          #print "en#{w}:#{manhanta}--"
           @dist_a[w] =@dist_a[v]+edge.size
           @edge_a[w]=edge
-          @queue.remove(w)
-          @queue.push(NodeQueue.new(w,@dist_a[w]))
+          if @queue.exist_value(w)
+            @queue.update(NodeQueue.new(w,@dist_a[w]+manhanta))
+          else
+            @queue.push(NodeQueue.new(w,@dist_a[w]+manhanta))          
+          end  
+          #@count_relax=@count_relax+1
+          if w==@destination
+            return
+          end
         end
       end
     end
+  end
+  def distanciaManHattan(vActual)
+    dx = @graph.position_coordinate_x(vActual) - @graph.position_coordinate_x(@destination)
+    dx=dx.abs
+    #puts vActual
+    #puts ""
+    #puts @graph.position_coordinate_x(vActual)
+    #puts dx
+    dy = @graph.position_coordinate_y(vActual) - @graph.position_coordinate_y(@destination)
+    dy=dy.abs
+    #puts dy
+    suma=(dx + dy)
+    return suma
   end
   def count_relax
     @count_relax
