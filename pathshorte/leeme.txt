@@ -1,0 +1,25 @@
+LEEME
+
+main.rb
+
+Instrucciones de uso
+
+1) Descomprimir el archivo pathshorte.rar
+
+2) Ubicar la ruta de tarea1.rb
+
+Ejemplo: C:\...\pathshorte
+
+3) Abrir el cmd en windows o la terminal de linux o mac
+Escribir cd + pegar la ruta copiada de archivo tarea1.rb
+
+Ejemplo: cd C:\...\pathshorte
+
+4) Por ultimo escribir ruby main.rb i j
+Nota: 
+i=fila
+j=columna
+Informacion:
+Desarrollado por Gregory Perozo
+CI: 26471194
+Realizado el 19  de febrero
