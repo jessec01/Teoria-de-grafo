@@ -1,5 +1,5 @@
 #importación
-require_relative './graph'
+require_relative './heavygraph'
 #
 class Read 
   def initialize(name_archive)
@@ -8,7 +8,6 @@ class Read
   end
   def read_archive(name_archive)
     begin
-
       num_size=0
       num_vertices_end=0
       num_vertices_initial=0
@@ -18,21 +17,21 @@ class Read
         content.each_line do |linea|
           if num_accountant ==0
             num_size=/^\d{1,3}$/.match(linea).to_s
-            #puts "eL"
+            #print "a #{num_size}" 
             #puts num_size
             if num_size.size==1
               value_size=num_size
-              @graph_dirigide=Graph.new(value_size.to_i)
+              @graph_dirigide=HeavyGraph.new(value_size.to_i)
               #puts "Hola "
               #puts @graph_dirigide
             elsif num_size.size==2
               value_size=num_size[0]+num_size[1]
-              @graph_dirigide=Graph.new(value_size.to_i)
+              @graph_dirigide=HeavyGraph.new(value_size.to_i)
               #puts "Hola "
               #puts @graph_dirigide
             elsif num_size.size==3
               value_size=num_size[0]+num_size[1]+num_size[2]
-              @graph_dirigide=Graph.new(value_size.to_i)  
+              @graph_dirigide=HeavyGraph.new(value_size.to_i)  
               #puts "Hola "
               #puts @graph_dirigide
             end
@@ -45,12 +44,18 @@ class Read
               #print "#{num_vertices_initial}--#{num_vertices_end} peso: #{num_size} "
               #puts @graph_dirigide
               #puts "mundo"
+              #print "#{@graph_dirigide.inspect}"
               @graph_dirigide.add_edge(num_vertices_initial,num_vertices_end,num_size)
             end  
           end
           num_accountant=num_accountant+1
         end
       end
+    
+    rescue IOError=>e
+      puts "Error al abrir el archivo"
+    end
+  end
   def read_archive_gv(name_archive)
       name_archive=name_archive
       num_size=0
